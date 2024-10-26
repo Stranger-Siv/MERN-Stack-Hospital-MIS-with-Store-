@@ -75,7 +75,7 @@ const Dashboard = () => {
           </div>
           <div className="thirdBox">
             <p>Registered Doctors</p>
-            <h3>09</h3>
+            <h3>10</h3>
           </div>
         </div>
         <div className="banner">
