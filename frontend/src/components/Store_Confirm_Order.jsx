@@ -13,7 +13,6 @@ const StoreConfirmOrder = () => {
 
   useEffect(() => {
 
-    // GSAP animation
     gsap.fromTo(
       ".order-confirmation",
       { opacity: 0, scale: 0.5 },

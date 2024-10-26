@@ -114,8 +114,9 @@ h6 {
   overflow-y: hidden;
 }
 .animated-image {
-  animation: moveUpDown 1s infinite alternate ease-in-out;
+  animation: moveUpDown 1s infinite alternate ease-in-out, fadeIn 2s forwards;
 }
+
 
 @keyframes moveUpDown {
   0% {
