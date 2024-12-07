@@ -35,8 +35,6 @@ function reloadWebsite() {
       console.error(`Error : ${error.message}`);
     });
 }
-
-
 setInterval(reloadWebsite, interval);
 
 app.use(cookieParser());
