@@ -13,10 +13,6 @@ import axios from 'axios';
 const app = express();
 config({ path: "./config/.env" });
 
-if (!process.env.FRONTEND_URL || !process.env.DASHBOARD_URL) {
-  throw new Error("Missing required environment variables: FRONTEND_URL or DASHBOARD_URL");
-}
-
 app.use(
   cors({
     origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL],
@@ -33,15 +29,12 @@ function reloadWebsite() {
   axios
     .get(url)
     .then((response) => {
-      console.log("Website reloaded");
+      console.log("website reloded");
     })
     .catch((error) => {
-      console.error(`Error: ${error.message}`);
-      // Retry logic (optional)
-      setTimeout(reloadWebsite, 5000); // Retry after 5 seconds if the request fails
+      console.error(`Error : ${error.message}`);
     });
 }
-
 setInterval(reloadWebsite, interval);
 
 app.use(cookieParser());
@@ -62,3 +55,4 @@ dbConnection();
 
 app.use(errorMiddleware);
 export default app;
+
