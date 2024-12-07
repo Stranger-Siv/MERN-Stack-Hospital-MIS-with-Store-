@@ -8,10 +8,14 @@ import { errorMiddleware } from "./middlewares/error.js";
 import messageRouter from "./router/messageRouter.js";
 import userRouter from "./router/userRouter.js";
 import appointmentRouter from "./router/appointmentRouter.js";
-// import axios from 'axios';
+import axios from 'axios';
 
 const app = express();
 config({ path: "./config/.env" });
+
+if (!process.env.FRONTEND_URL || !process.env.DASHBOARD_URL) {
+  throw new Error("Missing required environment variables: FRONTEND_URL or DASHBOARD_URL");
+}
 
 app.use(
   cors({
@@ -22,20 +26,23 @@ app.use(
   })
 );
 
-// const url = `https://meditrack-zbcm.onrender.com`;
-// const interval = 30000;
+const url = `https://meditrack-zbcm.onrender.com`;
+const interval = 30000;
 
-// function reloadWebsite() {
-//   axios
-//     .get(url)
-//     .then((response) => {
-//       console.log("website reloded");
-//     })
-//     .catch((error) => {
-//       console.error(`Error : ${error.message}`);
-//     });
-// }
-// setInterval(reloadWebsite, interval);
+function reloadWebsite() {
+  axios
+    .get(url)
+    .then((response) => {
+      console.log("Website reloaded");
+    })
+    .catch((error) => {
+      console.error(`Error: ${error.message}`);
+      // Retry logic (optional)
+      setTimeout(reloadWebsite, 5000); // Retry after 5 seconds if the request fails
+    });
+}
+
+setInterval(reloadWebsite, interval);
 
 app.use(cookieParser());
 app.use(express.json());
@@ -55,4 +62,3 @@ dbConnection();
 
 app.use(errorMiddleware);
 export default app;
-
