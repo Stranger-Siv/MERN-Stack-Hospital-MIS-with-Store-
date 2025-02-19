@@ -22,7 +22,7 @@ const Register = () => {
     try {
       await axios
         .post(
-          "https://meditrack-zbcm.onrender.com/api/v1/user/patient/register",
+          "https://meditrack-gjpx.onrender.com/api/v1/user/patient/register",
           { firstName, lastName, email, phone, nic, dob, gender, password },
           {
             withCredentials: true,

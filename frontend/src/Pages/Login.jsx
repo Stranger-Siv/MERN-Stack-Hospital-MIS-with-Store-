@@ -19,7 +19,7 @@ const Login = () => {
     try {
       await axios
         .post(
-          "https://meditrack-zbcm.onrender.com/api/v1/user/login",
+          "https://meditrack-gjpx.onrender.com/api/v1/user/login",
           { email, password, confirmPassword, role: "Patient" },
           {
             withCredentials: true,

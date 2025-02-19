@@ -27,7 +27,7 @@ const App = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          "https://meditrack-zbcm.onrender.com/api/v1/user/patient/me",
+          "https://meditrack-gjpx.onrender.com/api/v1/user/patient/me",
           {
             withCredentials: true,
           }

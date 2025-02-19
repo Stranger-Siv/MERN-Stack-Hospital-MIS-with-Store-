@@ -11,7 +11,7 @@ const Doctors = () => {
     const fetchDoctors = async () => {
       try {
         const { data } = await axios.get(
-          "https://meditrack-zbcm.onrender.com/api/v1/user/doctors",
+          "https://meditrack-gjpx.onrender.com/api/v1/user/doctors",
           { withCredentials: true }
         );
         setDoctors(data.doctors);

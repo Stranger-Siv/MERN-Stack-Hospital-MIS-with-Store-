@@ -23,7 +23,7 @@ const AddNewAdmin = () => {
     try {
       await axios
         .post(
-          "https://meditrack-zbcm.onrender.com/api/v1/user/admin/addnew",
+          "https://meditrack-gjpx.onrender.com/api/v1/user/admin/addnew",
           { firstName, lastName, email, phone, nic, dob, gender, password },
           {
             withCredentials: true,

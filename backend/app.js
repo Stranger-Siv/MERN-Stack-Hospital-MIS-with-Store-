@@ -22,7 +22,7 @@ app.use(
   })
 );
 
-const url = `https://meditrack-zbcm.onrender.com`;
+const url = `https://meditrack-gjpx.onrender.com`;
 const interval = 30000;
 
 function reloadWebsite() {

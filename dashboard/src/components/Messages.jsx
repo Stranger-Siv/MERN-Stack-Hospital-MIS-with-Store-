@@ -11,7 +11,7 @@ const Messages = () => {
     const fetchMessages = async () => {
       try {
         const { data } = await axios.get(
-          "https://meditrack-zbcm.onrender.com/api/v1/message/getall",
+          "https://meditrack-gjpx.onrender.com/api/v1/message/getall",
           { withCredentials: true }
         );
         setMessages(data.messages);

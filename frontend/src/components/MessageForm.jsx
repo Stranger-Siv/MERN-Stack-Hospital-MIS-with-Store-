@@ -16,7 +16,7 @@ const MessageForm = () => {
     try {
       await axios
         .post(
-          "https://meditrack-zbcm.onrender.com/api/v1/message/send",
+          "https://meditrack-gjpx.onrender.com/api/v1/message/send",
           { firstName, lastName, email, phone, message, visitedBefore },
           {
             withCredentials: true,
