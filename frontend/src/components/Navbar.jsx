@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { MdEmail } from "react-icons/md";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Context } from "../main";
@@ -50,15 +51,25 @@ const Navbar = () => {
               Store
             </Link>
           </div>
-          {isAuthenticated ? (
-            <button className="logoutBtn btn" onClick={handleLogout}>
-              LOGOUT
-            </button>
-          ) : (
-            <button className="loginBtn btn" onClick={goToLogin}>
-              LOGIN
-            </button>
-          )}
+          <div className="flex items-center gap-4">
+            {isAuthenticated ? (
+              <button className="logoutBtn btn" onClick={handleLogout}>
+                LOGOUT
+              </button>
+            ) : (
+              <button className="loginBtn btn" onClick={goToLogin}>
+                LOGIN
+              </button>
+            )}
+            <Link 
+              to="/contact" 
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-[#2f3d7e] text-white hover:bg-[#1f2b5e] transition-colors duration-200"
+              onClick={() => setShow(false)}
+              title="Contact Us"
+            >
+              <MdEmail size={20} />
+            </Link>
+          </div>
         </div>
         <div className="hamburger" onClick={() => setShow(!show)}>
           <GiHamburgerMenu />

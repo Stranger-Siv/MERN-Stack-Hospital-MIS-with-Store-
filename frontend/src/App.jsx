@@ -16,6 +16,8 @@ import Store_Home from "./Pages/Store_Home";
 import Store_Cart from "./Pages/Store_Cart";
 import Store_Checkout from "./Pages/Store_PlaceOrder";
 import Store_Confirm_Order from "./components/Store_Confirm_Order";
+import OrderConfirmed from './Pages/OrderConfirmed';
+import ContactUs from './Pages/ContactUs';
 
 const App = () => {
   const { isAuthenticated, setIsAuthenticated, setUser } =
@@ -54,6 +56,8 @@ const App = () => {
           <Route path="/cart" element={<Store_Cart />} />
           <Route path="/placeorder" element={<Store_Checkout />} />
           <Route path="/confirmorder" element={<Store_Confirm_Order />} />
+          <Route path="/orderconfirmed" element={<OrderConfirmed />} />
+          <Route path="/contact" element={<ContactUs />} />
         </Routes>
         <Footer />
         <ToastContainer position="top-center" />

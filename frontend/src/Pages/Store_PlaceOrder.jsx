@@ -2,24 +2,15 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StoreContext } from '../context/StoreContext';
 import Navbar from '../components/Store_Navbar';
-
+import { MdArrowBack, MdLocalShipping, MdPayment } from 'react-icons/md';
 
 const PlaceOrder = () => {
   const { getTotalCartAmount } = useContext(StoreContext);
   const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    street: '',
-    city: '',
-    state: '',
-    zip: '',
-    country: '',
-    phone: '',
+    firstName: '', lastName: '', email: '', street: '',
+    city: '', state: '', zip: '', country: '', phone: '',
   });
-
   const [errors, setErrors] = useState({});
   const [promoCode, setPromoCode] = useState('');
   const [discount, setDiscount] = useState(0);
@@ -52,187 +43,181 @@ const PlaceOrder = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
-    let newErrors = {};
-    for (const [key, value] of Object.entries(formData)) {
-      if (!value.trim()) {
-        newErrors[key] = 'This field is required';
-      }
-    }
-  
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-  
-    setErrors({});
-    
-    // Prepare order details to pass to the confirm order page
-    const orderDetails = {
-      total: total, // Use the calculated total
-      orderNumber: Math.floor(Math.random() * 1000000), // Generate a random order number or use a real one
-    };
-  
-    navigate('/confirmorder', { state: { orderDetails } });
+    navigate('/orderconfirmed');
   };
-  
 
   return (
-    <div>
-      <Navbar />
-    <form className='flex flex-col md:flex-row p-6 space-y-4 md:space-y-0 md:space-x-6' onSubmit={handleSubmit}>
-      <div className="flex-1 bg-white p-4 rounded-lg shadow-md">
-        <p className="text-lg font-semibold mb-4">Delivery Information</p>
-        <div className="flex flex-col space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="text"
-              name="firstName"
-              placeholder='First Name'
-              value={formData.firstName}
-              onChange={handleChange}
-              className='p-2 border border-gray-300 rounded'
-              required
-            />
-            <input
-              type="text"
-              name="lastName"
-              placeholder='Last Name'
-              value={formData.lastName}
-              onChange={handleChange}
-              className='p-2 border border-gray-300 rounded'
-              required
-            />
-          </div>
-          <input
-            type="email"
-            name="email"
-            placeholder='Email address'
-            value={formData.email}
-            onChange={handleChange}
-            className='p-2 border border-gray-300 rounded'
-            required
-          />
-          <input
-            type="text"
-            name="street"
-            placeholder='Street'
-            value={formData.street}
-            onChange={handleChange}
-            className='p-2 border border-gray-300 rounded'
-            required
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="text"
-              name="city"
-              placeholder='City'
-              value={formData.city}
-              onChange={handleChange}
-              className='p-2 border border-gray-300 rounded'
-              required
-            />
-            <input
-              type="text"
-              name="state"
-              placeholder='State'
-              value={formData.state}
-              onChange={handleChange}
-              className='p-2 border border-gray-300 rounded'
-              required
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="text"
-              name="zip"
-              placeholder='Zip code'
-              value={formData.zip}
-              onChange={handleChange}
-              className='p-2 border border-gray-300 rounded'
-              required
-            />
-            <input
-              type="text"
-              name="country"
-              placeholder='Country'
-              value={formData.country}
-              onChange={handleChange}
-              className='p-2 border border-gray-300 rounded'
-              required
-            />
-          </div>
-          <input
-            type="text"
-            name="phone"
-            placeholder='Phone'
-            value={formData.phone}
-            onChange={handleChange}
-            className='p-2 border border-gray-300 rounded'
-            required
-          />
-          {Object.keys(errors).length > 0 && (
-            <div className="text-red-500 mt-2">
-              {Object.values(errors).map((error, index) => (
-                <p key={index}>{error}</p>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 pt-24">
+      {/* Back Button */}
+      <button 
+        onClick={() => navigate('/cart')}
+        className="fixed bottom-7 right-8 z-50 bg-[#2f3d7e] text-white p-4 rounded-full shadow-lg hover:bg-[#1f2b5e] transition-all duration-200 
+          animate-bounce hover:animate-none
+          hover:scale-110
+          ring-4 ring-blue-100 hover:ring-blue-200
+          hover:shadow-xl"
+      >
+        <MdArrowBack className="text-2xl" />
+      </button>
 
-      <div className="w-full md:w-1/3 bg-white p-4 rounded-lg shadow-md">
-        <div className="space-y-4">
-          <h2 className="text-lg font-semibold">Cart Totals</h2>
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <p>Subtotal</p>
-              <p>${subtotal.toFixed(2)}</p>
-            </div>
-            <hr />
-            <div className="flex justify-between">
-              <p>Delivery Fee</p>
-              <p>${deliveryFee.toFixed(2)}</p>
-            </div>
-            <hr />
-            <div className="flex justify-between">
-              <p>Discount</p>
-              <p>-${discount.toFixed(2)}</p>
-            </div>
-            <hr />
-            <div className="flex justify-between font-bold">
-              <p>Total</p>
-              <p>${total.toFixed(2)}</p>
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <div className="inline-block p-3 bg-blue-100 rounded-2xl mb-6">
+            <MdLocalShipping className="text-[#2f3d7e] text-4xl" />
+          </div>
+          <h1 className="text-4xl font-bold text-[#2f3d7e] mb-4">Checkout</h1>
+          <p className="text-gray-600">Complete your order details</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* Delivery Information */}
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-xl shadow-md p-8">
+              <h2 className="text-xl font-bold text-[#2f3d7e] mb-6">Delivery Information</h2>
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <input
+                    type="text"
+                    name="firstName"
+                    placeholder="First Name"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#2f3d7e] focus:border-transparent outline-none transition-all"
+                  />
+                  <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Last Name"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#2f3d7e] focus:border-transparent outline-none transition-all"
+                  />
+                </div>
+                
+                {/* Other form fields with same styling */}
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email Address"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#2f3d7e] focus:border-transparent outline-none transition-all"
+                />
+                
+                <input
+                  type="text"
+                  name="street"
+                  placeholder="Street Address"
+                  value={formData.street}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#2f3d7e] focus:border-transparent outline-none transition-all"
+                />
+
+                <div className="grid grid-cols-2 gap-6">
+                  <input
+                    type="text"
+                    name="city"
+                    placeholder="City"
+                    value={formData.city}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#2f3d7e] focus:border-transparent outline-none transition-all"
+                  />
+                  <input
+                    type="text"
+                    name="state"
+                    placeholder="State"
+                    value={formData.state}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#2f3d7e] focus:border-transparent outline-none transition-all"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-6">
+                  <input
+                    type="text"
+                    name="zip"
+                    placeholder="ZIP Code"
+                    value={formData.zip}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#2f3d7e] focus:border-transparent outline-none transition-all"
+                  />
+                  <input
+                    type="text"
+                    name="phone"
+                    placeholder="Phone Number"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#2f3d7e] focus:border-transparent outline-none transition-all"
+                  />
+                </div>
+              </div>
             </div>
           </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition"
-          >
-            Proceed To Payment
-          </button>
-        </div>
-        <div className="mt-6 border-t pt-4">
-          <p className="mb-2 text-lg font-semibold">Have a promo code?</p>
-          <div className="flex flex-col md:flex-row gap-2">
-            <input
-              type="text"
-              placeholder="Enter Promo Code"
-              value={promoCode}
-              onChange={handlePromoCodeChange}
-              className="flex-1 py-3 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <button
-              onClick={handlePromoCodeSubmit}
-              className="w-full md:w-auto py-3 px-6 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 transition-colors duration-300"
-            >
-              Apply
-            </button>
+
+          {/* Order Summary */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-xl shadow-md p-8">
+              <h2 className="text-xl font-bold text-[#2f3d7e] mb-6">Order Summary</h2>
+              
+              <div className="space-y-4 mb-6">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Subtotal</span>
+                  <span className="font-medium">${subtotal.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Delivery Fee</span>
+                  <span className="font-medium">${deliveryFee.toFixed(2)}</span>
+                </div>
+                {discount > 0 && (
+                  <div className="flex justify-between text-green-600">
+                    <span>Discount</span>
+                    <span>-${discount.toFixed(2)}</span>
+                  </div>
+                )}
+                <div className="pt-4 border-t border-gray-100">
+                  <div className="flex justify-between font-bold text-lg text-[#2f3d7e]">
+                    <span>Total</span>
+                    <span>${total.toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Promo Code */}
+              <div className="mb-6">
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="Promo Code"
+                    value={promoCode}
+                    onChange={handlePromoCodeChange}
+                    className="flex-1 px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-[#2f3d7e] focus:border-transparent outline-none transition-all"
+                  />
+                  <button
+                    type="button"
+                    onClick={handlePromoCodeSubmit}
+                    className="px-6 py-3 bg-[#2f3d7e] text-white rounded-lg hover:bg-[#1f2b5e] transition-colors duration-200"
+                  >
+                    Apply
+                  </button>
+                </div>
+                {promoError && (
+                  <p className="mt-2 text-red-500 text-sm">{promoError}</p>
+                )}
+              </div>
+
+              <button
+                onClick={() => navigate('/orderconfirmed')}
+                className="w-full bg-[#2f3d7e] text-white py-4 rounded-lg hover:bg-[#1f2b5e] transition-colors duration-200 flex items-center justify-center gap-2"
+              >
+                <MdPayment className="text-xl" />
+                Proceed to Payment
+              </button>
+            </div>
           </div>
-          {promoError && <p className="mt-2 text-red-500">{promoError}</p>}
-        </div>
+        </form>
       </div>
-    </form>
     </div>
   );
 };

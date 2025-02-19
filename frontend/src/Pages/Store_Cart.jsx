@@ -2,11 +2,10 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StoreContext } from '../context/StoreContext'
 import Navbar from '../components/Store_Navbar'
-
-
+import { MdArrowBack, MdAdd, MdRemove } from 'react-icons/md';
 
 const Cart = () => {
-  const { cartItems, removeFromCart, food_list, getTotalCartAmount } = useContext(StoreContext);
+  const { cartItems, removeFromCart, addToCart, food_list, getTotalCartAmount } = useContext(StoreContext);
   const navigate = useNavigate();
   const [discount, setDiscount] = useState(0);
 
@@ -15,74 +14,132 @@ const Cart = () => {
   const totalBeforeDiscount = subtotal + deliveryFee;
   const total = totalBeforeDiscount - discount;
 
-  return (
-    <div>
-    <Navbar />
-    
-    <div className="p-6 max-w-4xl mx-auto bg-white shadow-lg rounded-lg">
-      <div className="mb-6">
-        <div className="grid grid-cols-1 sm:grid-cols-7 gap-4 text-gray-700 font-semibold border-b pb-2 mb-4">
-          <p className="text-left col-span-1">Image</p>
-          <p className="text-left col-span-2">Title</p>
-          <p className="text-right">Price</p>
-          <p className="text-right">Qty</p>
-          <p className="text-right">Total</p>
-          <p className="text-right">Rem</p>
-        </div>
-        {food_list.length > 0 ? (
-          food_list.map((item) => {
-            const quantity = cartItems[item._id];
-            if (quantity > 0) {
-              return (
-                <div className="grid grid-cols-1 sm:grid-cols-7 gap-4 items-center border-b py-4" key={item._id}>
-                  <img src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded-md shadow-md col-span-1 sm:col-span-1" />
-                  <p className="col-span-1 sm:col-span-2 text-left font-medium">{item.name}</p>
-                  <p className="text-right text-gray-600">${item.price.toFixed(2)}</p>
-                  <p className="text-right text-gray-600">{quantity}</p>
-                  <p className="text-right text-gray-600">${(item.price * quantity).toFixed(2)}</p>
-                  <p className="text-right">
-                    <button
-                      className="text-red-500 hover:text-red-700 transition-colors duration-300 font-medium p-2 sm:p-5"
-                      onClick={() => removeFromCart(item._id)}>
-                        ❌
-                    </button>
-                  </p>
-                </div>
-              );
-            }
-            return null;
-          })
-        ) : (
-          <p className="text-center text-gray-500 py-4">Your cart is empty</p>
-        )}
-      </div>
+  const handleDecrement = (itemId, currentQuantity) => {
+    if (currentQuantity > 1) {
+      removeFromCart(itemId);
+    }
+  };
 
-      <div>
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold mb-4">Cart Totals</h2>
-          <div className="border-t border-gray-200 pt-4">
-            <div className="flex flex-col sm:flex-row sm:justify-between mb-2 py-2 px-4 bg-gray-50 rounded-md shadow-sm">
-              <p className="font-medium">Subtotal</p>
-              <p>${subtotal.toFixed(2)}</p>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:justify-between mb-2 py-2 px-4 bg-gray-50 rounded-md shadow-sm border-t border-gray-200">
-              <p className="font-medium">Delivery Fee</p>
-              <p>${deliveryFee.toFixed(2)}</p>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:justify-between font-bold py-2 px-4 bg-gray-50 rounded-md shadow-sm border-t border-gray-200">
-              <p>Total</p>
-              <p>${total.toFixed(2)}</p>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 pt-24">
+      {/* Back to Store Button */}
+      <button 
+        onClick={() => navigate('/store')}
+        className="fixed bottom-7 right-8 z-50 bg-[#2f3d7e] text-white p-4 rounded-full shadow-lg hover:bg-[#1f2b5e] transition-all duration-200 
+          animate-bounce hover:animate-none
+          hover:scale-110
+          ring-4 ring-blue-100 hover:ring-blue-200
+          hover:shadow-xl"
+      >
+        <MdArrowBack className="text-2xl" />
+      </button>
+
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h1 className="text-3xl font-bold text-[#2f3d7e] mb-8 text-center">Shopping Cart</h1>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Cart Items List */}
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-xl shadow-md overflow-hidden">
+              {food_list.length === 0 ? (
+                <div className="p-8 text-center">
+                  <p className="text-gray-600 mb-4">Your cart is empty</p>
+                  <button
+                    onClick={() => navigate('/store')}
+                    className="text-[#2f3d7e] font-medium hover:underline"
+                  >
+                    Continue Shopping
+                  </button>
+                </div>
+              ) : (
+                <div className="divide-y divide-gray-100">
+                  {food_list.map((item) => {
+                    const quantity = cartItems[item._id];
+                    if (quantity > 0) {
+                      return (
+                        <div key={item._id} className="p-6 flex items-center gap-4">
+                          <img 
+                            src={item.image} 
+                            alt={item.name} 
+                            className="w-20 h-20 object-cover rounded-lg"
+                          />
+                          <div className="flex-grow">
+                            <h3 className="font-medium text-gray-800">{item.name}</h3>
+                            <p className="text-[#2f3d7e] font-bold">${item.price.toFixed(2)}</p>
+                          </div>
+                          <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-2">
+                            <button 
+                              onClick={() => handleDecrement(item._id, quantity)}
+                              className={`p-1 rounded-full transition-colors ${
+                                quantity > 1 
+                                  ? 'hover:bg-gray-200 text-[#2f3d7e]' 
+                                  : 'text-gray-400 cursor-not-allowed'
+                              }`}
+                              disabled={quantity <= 1}
+                            >
+                              <MdRemove className="text-xl" />
+                            </button>
+                            <span className="w-8 text-center font-medium">{quantity}</span>
+                            <button 
+                              onClick={() => addToCart(item._id)}
+                              className="p-1 hover:bg-gray-200 rounded-full transition-colors text-[#2f3d7e]"
+                            >
+                              <MdAdd className="text-xl" />
+                            </button>
+                          </div>
+                          <button
+                            onClick={() => {
+                              // Remove all quantities of this item
+                              for (let i = 0; i < quantity; i++) {
+                                removeFromCart(item._id);
+                              }
+                            }}
+                            className="p-2 text-red-500 hover:bg-red-50 rounded-full"
+                          >
+                            ❌
+                          </button>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
+                </div>
+              )}
             </div>
           </div>
-          <button
-            onClick={() => navigate('/placeorder')}
-            className="mt-6 py-3 px-6 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-300"
-          >
-            Proceed To Checkout
-          </button>
+
+          {/* Order Summary */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-xl shadow-md p-6">
+              <h2 className="text-xl font-bold text-gray-800 mb-6">Order Summary</h2>
+              
+              <div className="space-y-4 mb-6">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Subtotal</span>
+                  <span>${subtotal.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Delivery Fee</span>
+                  <span>${deliveryFee.toFixed(2)}</span>
+                </div>
+                <div className="pt-4 border-t border-gray-100">
+                  <div className="flex justify-between font-bold text-lg">
+                    <span>Total</span>
+                    <span className="text-[#2f3d7e]">${total.toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                onClick={() => navigate('/placeorder')}
+                className="w-full bg-[#2f3d7e] text-white py-3 rounded-lg hover:bg-[#1f2b5e] transition-colors duration-200"
+              >
+                Proceed to Checkout
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 };

@@ -1,87 +1,81 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { FaLocationArrow, FaPhone } from "react-icons/fa6";
-import { MdEmail } from "react-icons/md";
+import { Link, useNavigate } from "react-router-dom";
+import { FaLinkedin, FaTwitter } from "react-icons/fa6";
+import { MdLocalHospital, MdSchedule } from "react-icons/md";
 
 const Footer = () => {
-  const hours = [
-    {
-      id: 1,
-      day: "Monday",
-      time: "9:00 AM - 11:00 PM",
-    },
-    {
-      id: 2,
-      day: "Tuesday",
-      time: "12:00 PM - 12:00 AM",
-    },
-    {
-      id: 3,
-      day: "Wednesday",
-      time: "10:00 AM - 10:00 PM",
-    },
-    {
-      id: 4,
-      day: "Thursday",
-      time: "9:00 AM - 9:00 PM",
-    },
-    {
-      id: 5,
-      day: "Monday",
-      time: "3:00 PM - 9:00 PM",
-    },
-    {
-      id: 6,
-      day: "Saturday",
-      time: "9:00 AM - 3:00 PM",
-    },
-  ];
+  const navigate = useNavigate();
+
+  const handleBookAppointment = () => {
+    navigate('/appointment');
+  };
 
   return (
-    <>
-      <footer className={"container"}>
-        <hr />
-        <div className="content">
-          <div>
-            <img src="/logo.png" alt="logo" className="logo-img"/>
-          </div>
-          <div>
-            <h4>Quick Links</h4>
-            <ul>
-              <Link to={"/"}>Home</Link>
-              <Link to={"/appointment"}>Appointment</Link>
-              <Link to={"/about"}>About</Link>
+    <footer className="bg-black text-white py-16">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* Quick Links */}
+          <div className="space-y-6">
+            <h3 className="text-lg font-medium flex items-center gap-2">
+              <MdSchedule className="text-blue-400" />
+              Quick Links
+            </h3>
+            <ul className="space-y-4">
+              <li>
+                <button 
+                  onClick={handleBookAppointment}
+                  className="text-gray-400 text-lg hover:text-white transition-colors"
+                >
+                  Schedule Medical Visit
+                </button>
+              </li>
+              
+              <li>
+                <Link to="/" className="text-gray-400 hover:text-white transition-colors">
+                  Home
+                </Link>
+              </li>
             </ul>
           </div>
-          <div>
-            <h4>Hours</h4>
-            <ul>
-              {hours.map((element) => (
-                <li key={element.id}>
-                  <span>{element.day}</span>
-                  <span>{element.time}</span>
-                </li>
-              ))}
+
+          {/* Contact & Hours */}
+          <div className="space-y-6">
+            <h3 className="text-lg font-medium flex items-center gap-2">
+              <MdLocalHospital className="text-blue-400" />
+              Contact & Hours
+            </h3>
+            <ul className="space-y-4 text-gray-400">
+              <li>Mon - Fri: 9:00 AM - 7:00 PM</li>
+              <li>Sat: 9:00 AM - 5:00 PM</li>
+              <li>Sun: Closed</li>
+              <li className="pt-2">Phone: 9876543210</li>
             </ul>
-          </div>
-          <div>
-            <h4>Contact</h4>
-            <div>
-              <FaPhone />
-              <span>8866209083</span>
-            </div>
-            <div>
-              <MdEmail />
-              <span>siv21@gmail.com</span>
-            </div>
-            <div>
-              <FaLocationArrow />
-              <span>Vadodara, Gujarat</span>
-            </div>
           </div>
         </div>
-      </footer>
-    </>
+
+        {/* Bottom Bar */}
+        <div className="mt-16 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+          {/* Logo and Copyright */}
+          <div className="flex items-center gap-2">
+            <img src="/logo.png" alt="logo" className="h-8" />
+            <span className="text-gray-400">
+              © {new Date().getFullYear()} Healthcare Appointment System
+            </span>
+          </div>
+
+          {/* Social Links */}
+          <div className="flex gap-6">
+            <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <FaLinkedin size={20} />
+            </a>
+            <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <FaTwitter size={20} />
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 };
 

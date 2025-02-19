@@ -1,28 +1,33 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   overflow-x: hidden;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Inter", sans-serif;
 }
 body {
-  background: #e5e5e5;
+  background: #f8fafc;
+  color: #1e293b;
 }
 .btn {
-  padding: 7px 20px;
-  border-radius: 12px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
   border: none;
-  font-weight: bold;
-  letter-spacing: 2px;
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
 .white-btn {
   background: #fff;
-  color: #111;
+  color: #1e293b;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 .purple-btn {
-  background: #9083d5;
+  background: #6366f1;
   color: #fff;
+}
+.purple-btn:hover {
+  background: #4f46e5;
 }
 p,
 span,
@@ -74,10 +79,10 @@ h6 {
 }
 .hero {
   display: flex;
-  gap: 50px;
-  padding-top: 120px;
-  padding-bottom: 120px;
+  gap: 4rem;
+  padding: 8rem 0;
   position: relative;
+  background: linear-gradient(to bottom, #fff, #f8fafc);
 }
 .hero .banner {
   flex: 1;
@@ -87,13 +92,18 @@ h6 {
   max-width: 650px;
 }
 .hero .banner h1 {
-  letter-spacing: 2px;
-  word-spacing: 5px;
-  font-size: 40px;
+  font-size: 3.5rem;
+  line-height: 1.1;
+  font-weight: 800;
+  background: linear-gradient(to right, #1e293b, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .hero .banner p {
-  color: #111;
-  letter-spacing: 2px;
+  font-size: 1.25rem;
+  line-height: 1.7;
+  color: #64748b;
+  margin-top: 1.5rem;
 }
 .hero .banner span {
   position: absolute;
@@ -442,12 +452,18 @@ nav {
   padding-top: 20px !important;
   padding-bottom: 20px !important;
   z-index: 2;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding: 1rem 0;
 }
 nav .logo {
   flex: 1;
   display: flex;
   align-items: center;
   font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
 }
 nav .navLinks {
   flex: 2;
@@ -463,15 +479,14 @@ nav .navLinks .links {
 }
 nav .navLinks .links a {
   text-decoration: none;
-  color: #222;
+  color: #64748b;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 1.4px;
+  transition: color 0.2s ease;
 }
 nav .navLinks .links a:hover {
-  color: #000;
-  transition: 0.3s;
-  cursor: pointer;
+  color: #6366f1;
 }
 nav .btn {
   padding: 8px 20px;
